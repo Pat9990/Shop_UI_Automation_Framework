@@ -1,7 +1,8 @@
 import pytest
 
 from pages.login_page import LoginPage
-from core.config import INVENTORY_URL, ERR_INCORRECT, ERR_EMPTY_USERNAME, ERR_EMPTY_PASSWORD
+from core.config import INVENTORY_URL, ERR_INCORRECT, ERR_EMPTY_USERNAME, ERR_EMPTY_PASSWORD, STANDARD_USER, \
+    STANDARD_PASSWORD
 
 
 class TestLoginPage:
@@ -10,7 +11,7 @@ class TestLoginPage:
         """Testuje logowanie poprawnymi danymi"""
         login_page = LoginPage(driver)
         login_page.open_login_page()
-        login_page.login("standard_user","secret_sauce")
+        login_page.login(STANDARD_USER,STANDARD_PASSWORD)
 
         assert login_page.current_url == INVENTORY_URL, "Login failed: You are not logged in"
 
