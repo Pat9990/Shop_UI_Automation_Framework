@@ -62,7 +62,7 @@ Możesz generować raporty w HTML za pomocą pytest-html:
 pytest --html=reports/report.html --self-contained-html
 ```
 Raport zostanie zapisany w folderze reports/ (trzeba go utworzyć, jeśli nie istnieje).
-Zawiera szczegóły testów, wyniki, stack trace i screeny (jeśli dodasz zrzuty ekranu w testach).
+Zawiera szczegóły testów, wyniki itp.
 
 ## Struktura projektu
 ```
