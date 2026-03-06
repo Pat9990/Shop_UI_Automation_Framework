@@ -18,8 +18,8 @@ class TestLoginPage:
     @pytest.mark.parametrize(
         "username,password",
         [
-            ("incorrect_username", "secret_sauce"),
-            ("standard_user", "incorrect_password"),
+            ("incorrect_username", STANDARD_PASSWORD),
+            (STANDARD_USER, "incorrect_password"),
         ]
     )
     def test_negative_incorrect_data(self, driver, username, password):
@@ -33,8 +33,8 @@ class TestLoginPage:
     @pytest.mark.parametrize(
         "username,password,expected_error",
         [
-            ("", "secret_sauce", ERR_EMPTY_USERNAME),
-            ("standard_user", "", ERR_EMPTY_PASSWORD),
+            ("", STANDARD_PASSWORD, ERR_EMPTY_USERNAME),
+            (STANDARD_USER, "", ERR_EMPTY_PASSWORD),
         ]
     )
     def test_negative_empty_data(self, driver, username, password, expected_error):
