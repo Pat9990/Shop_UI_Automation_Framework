@@ -6,68 +6,69 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class BasePage():
-    """Bazowa klasa dla wszystkich stron w aplikacji.
-        Zawiera podstawowe metody do znajdowania elementów, kliknięć,
-        wpisywania tekstu, oczekiwań i pobierania informacji ze strony.
-        """
+    """
+    The base class for all pages in the application.
+    Contains basic methods for finding elements, clicking,
+    entering text, waiting, and retrieving information from the page.
+    """
 
     def __init__(self, driver: WebDriver):
-        """Inicjalizacja z przeglądarką."""
+        """Initialization with browser."""
         self._driver = driver
 
-    # ---------------------- Znajdowanie elementów ----------------------
+    # ---------------------- Finding elements ----------------------
     def _find(self, locator: tuple[str,str]) -> WebElement:
-        """Zwraca pojedynczy widoczny element."""
+        """Returns a single visible item."""
         self._wait_until_element_is_visible(locator)
         return self._driver.find_element(*locator)
 
     def _find_all(self, locator: tuple[str,str]) -> list[WebElement]:
-        """Zwraca wszystkie widoczne elementy pasujące do lokatora."""
+        """Returns all visible elements matching the locator."""
         wait = WebDriverWait(self._driver, 10)
         return wait.until(EC.visibility_of_all_elements_located(locator))
 
-    # ---------------------- Interakcje ----------------------
+    # ---------------------- Interactions ----------------------
     def _type(self, locator: tuple[str,str], text: str):
-        """Wpisuje tekst w pole wskazane lokatorem."""
+        """Inputs text into the field indicated by the locator."""
         self._find(locator).send_keys(text)
 
     def _click(self, locator: tuple[str,str]):
-        """Kliknięcie elementu."""
+        """Clicks into element"""
         self._find(locator).click()
 
     def _get_text(self, locator: tuple[str,str]) -> str:
-        """Zwraca tekst elementu."""
+        """Returns the text of the item."""
         return self._find(locator).text
 
-    # ---------------------- Wait'y ----------------------
+    # ---------------------- Waits ----------------------
     def _wait_until_element_is_visible(self, locator: tuple[str,str], time:int = 10):
-        """Czeka, aż element stanie się widoczny."""
+        """Waits until the element becomes visible."""
         wait = WebDriverWait(self._driver, time)
         wait.until(EC.visibility_of_element_located(locator))
 
     def _wait_until_element_is_not_visible(self, locator: tuple[str,str], time:int = 10) -> bool:
-        """Czeka, aż element zniknie. Zwraca True po niewidoczności."""
+        """Waits for the element to disappear. Returns True if invisible."""
         wait = WebDriverWait(self._driver, time)
         return wait.until(EC.invisibility_of_element_located(locator))
 
     def wait_until_text_is_visible(self, locator:tuple[str,str], expected_text:str, time:int = 10):
-        """Czeka, aż tekst pojawi się w elemencie."""
+        """Waits for text to appear in the element."""
         wait = WebDriverWait(self._driver, time)
         wait.until(EC.text_to_be_present_in_element(locator, expected_text))
 
-    # ---------------------- Nawigacja ----------------------
+    # ---------------------- Navigation ----------------------
     def _open_url(self, url: str):
-        """Otwiera podany URL."""
+        """Opens the given URL."""
         self._driver.get(url)
 
     @property
     def current_url(self) -> str:
-        """Zwraca aktualny URL strony."""
+        """Returns the current page URL."""
         return self._driver.current_url
 
-    # ---------------------- Pomocnicze metody ----------------------
+    # ---------------------- Additional methods ----------------------
     def _get_products(self) -> dict[str, str]:
-        """Zwraca słownik produktów {nazwa: cena} na stronie."""
+        """Returns a dictionary of products {name: price} on the page."""
         products = {}
         names = self._find_all((By.CLASS_NAME, "inventory_item_name"))
         prices = self._find_all((By.CLASS_NAME, "inventory_item_price"))
@@ -78,6 +79,6 @@ class BasePage():
         return products
 
     def _get_number_of_prices(self, prices:list[str]) -> list[float]:
-        """Konwertuje listę cen z tekstu na float."""
+        """Converts a list of prices from text to float."""
         prices_numbers =[float(price.lstrip("$")) for price in prices]
         return prices_numbers

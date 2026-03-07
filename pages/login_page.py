@@ -8,7 +8,7 @@ from pages.base_page import BasePage
 
 
 class LoginPage(BasePage):
-    """Strona logowania."""
+    """Login page."""
 
     __username_field = (By.ID, "user-name")
     __password_field = (By.ID, "password")
@@ -16,21 +16,21 @@ class LoginPage(BasePage):
     __error_msg = (By.XPATH, "//div[@class='error-message-container error']")
 
     def __init__(self, driver: WebDriver):
-        """Inicjalizuje stronę logowania z podanym WebDriverem."""
+        """Initializes the login page with the given WebDriver."""
         super().__init__(driver)
 
     def open_login_page(self):
-        """Otwiera stronę logowania."""
+        """Opens the login page."""
         self._open_url(LOGIN_URL)
 
     def login(self, username: str, password: str):
-        """Loguje użytkownika podanym loginem i hasłem."""
+        """Logs in the user with the provided login and password."""
         self._type(self.__username_field, username)
         self._type(self.__password_field,password)
         self._click(self.__login_btn)
 
     def get_error_msg(self) -> str:
-        """Zwraca tekst komunikatu o błędzie logowania."""
+        """Returns the text of the login error message."""
         return self._get_text(self.__error_msg)
 
 

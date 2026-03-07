@@ -1,22 +1,22 @@
 # SauceDemo Test Automation
 
-Projekt automatyzuje testy funkcjonalne strony [SauceDemo](https://www.saucedemo.com/) przy użyciu **Selenium WebDriver**, **pytest** i **Page Object Model (POM)**.
+The project automates functional testing of the [SauceDemo](https://www.saucedemo.com/) website using **Selenium WebDriver**, **pytest** and **Page Object Model (POM)**.
 
 ---
 
-## Spis treści
+## Contents
 
-- [Technologie](#technologie)
-- [Instalacja](#instalacja)
-- [Uruchamianie testów](#uruchamianie-testów)
-- [Raporty](#raporty)
-- [Struktura projektu](#struktura-projektu)
-- [Konwencje](#konwencje)
-- [Przykładowe testy](#przykładowe-testy)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Running Tests](#running-tests)
+- [Reports](#reports)
+- [Project Structure](#project-structure)
+- [Conventions](#conventions)
+- [Sample Tests](#sample-tests)
 
 ---
 
-## Technologie
+## Technologies
 
 - Python 3.11+
 - Selenium 4.x
@@ -27,49 +27,48 @@ Projekt automatyzuje testy funkcjonalne strony [SauceDemo](https://www.saucedemo
 
 ---
 
-## Instalacja
+## Installation
 
-1. Sklonuj repozytorium:
+1. Clone repository:
 
 ```bash
 git clone <repo-url>
 cd <project-folder>
 ```
-2. Stwórz wirtualne środowisko:
+2. Create virtual environment:
 ```bash
 python -m venv .venv
 ```
-3.Aktywuj wirtualne środowisko:
+3.Activate virtual environment:
 Windows
 ```bash
 .venv\Scripts\activate
 ```
-4. Zainstaluj zależności:
+4. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Uruchamianie testów
+## Running Tests
 ```bash
 pytest -v
 ```
-- Testy korzystają z Firefoxa domyślnie.
-- Wszystkie testy automatycznie otwierają przeglądarkę, wykonują akcje i zamykają ją po teście
+- Tests use Firefox by default.
+- All tests automatically open the browser, perform actions, and close it after the test.
 
-## Raporty
-Możesz generować raporty w HTML za pomocą pytest-html:
+## Reports
+You can generate reports in HTML using pytest-html:
 ```bash
 pytest --html=reports/report.html --self-contained-html
 ```
-Raport zostanie zapisany w folderze reports/ (trzeba go utworzyć, jeśli nie istnieje).
-Zawiera szczegóły testów, wyniki itp.
+The report will be saved in the reports/ folder (you'll need to create it if it doesn't exist). It contains test details, results, etc.
 
-## Struktura projektu
+## Project Structure
 ```
 project/
 │
-├── core/                 # Konfiguracja i ustawienia globalne
-│   └── config.py         # URL-e, dane testowe, stałe
+├── core/                 # Configuration and global settings
+│   └── config.py         # URLs, test data, constants
 │
 ├── pages/                # Page Object Models
 │   ├── base_page.py
@@ -78,27 +77,26 @@ project/
 │   ├── cart_page.py
 │   └── checkout_page.py
 │
-├── tests/                # Testy automatyczne
+├── tests/                # Automated tests
 │   ├── test_login.py
 │   ├── test_inventory.py
 │   ├── test_cart.py
 │   └── test_checkout.py
 │
 ├── conftest.py           # Pytest fixtures
-├── requirements.txt      # Lista zależności
-├── reports/              # Raporty HTML z testów
-└── README.md             # Dokumentacja
+├── requirements.txt      # Dependency list
+├── reports/              # HTML test reports
+└── README.md             # Documentation
 ```
-## Konwencje
-- Page Object Model – każda strona ma swoją klasę w pages/.
-- Lokatory prywatne zaczynają się od __, metody pomocnicze od _.
-- Publiczne metody opisują akcje użytkownika (np. login, add_to_cart, checkout_overview).
+## Conventions
+- Page Object Model – each page has its own class in pages/.
+- Private locators begin with __, helper methods begin with _.
+- Public methods describe user actions (e.g., login, add_to_cart, checkout_overview).
 - checkout_overview).
+- Configuration data (URLs, logins, passwords) is located in core/config.py.
 
-Dane konfiguracyjne (URL-e, login, hasła) znajdują się w core/config.py.
-
-## Przykładowe testy
-- Logowanie poprawne i błędne (test_login.py)
-- Sortowanie produktów według nazwy i ceny (test_inventory.py)
-- Dodawanie/usuwanie produktów w koszyku (test_cart.py)
-- Checkout i weryfikacja sumy cen (test_checkout.py)
+## Sample Tests
+- Login success and failure (test_login.py)
+- Sorting products by name and price (test_inventory.py)
+- Adding/removing products from the cart (test_cart.py)
+- Checkout and price total verification (test_checkout.py)

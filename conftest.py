@@ -10,7 +10,7 @@ from core import config
 # --------------------- Driver fixture ---------------------
 @pytest.fixture
 def driver():
-    """Tworzy instancję przeglądarki Firefox i zamyka ją po teście."""
+    """Creates an instance of Firefox and closes it after the test."""
     driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
     driver.maximize_window()
     yield driver
@@ -19,7 +19,7 @@ def driver():
 # --------------------- Logged in user fixture ---------------------
 @pytest.fixture
 def logged_in_user(driver):
-    """Loguje użytkownika standardowego do aplikacji."""
+    """Logs a standard user into the application."""
     from pages.login_page import LoginPage
     login_page = LoginPage(driver)
     login_page.open_login_page()
@@ -28,7 +28,7 @@ def logged_in_user(driver):
 
 # --------------------- HTML Report Configuration ---------------------
 def pytest_configure(config):
-    """Automatically configure HTML reports."""
+    """Automatically configures HTML reports."""
     reports_folder = "reports"
     screenshots_folder = os.path.join(reports_folder, "screenshots")
 

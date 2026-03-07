@@ -10,16 +10,16 @@ class TestCart:
         (["Sauce Labs Bolt T-Shirt"]),
     ])
     def test_add_to_cart(self, logged_in_user, products):
-        """Dodaję produkty do koszyka."""
+        """Adds products to the cart."""
         inventory_page = InventoryPage(logged_in_user)
 
-        # Dodawanie produktów
+        # Adding products
         for product in products:
             inventory_page.add_to_cart(product)
 
         inventory_products = inventory_page.get_added_products()
 
-        # Przejście do koszyka
+        # Going to cart
         cart_page = inventory_page.go_to_cart_page()
         cart_products = cart_page.get_products_from_cart()
 
@@ -30,7 +30,7 @@ class TestCart:
 
     @pytest.mark.parametrize("product", ["Sauce Labs Backpack"])
     def test_remove_product_from_cart(self, logged_in_user, product):
-        """Usuwam produkt z koszyka."""
+        """Removes product from the cart."""
         inventory_page = InventoryPage(logged_in_user)
         inventory_page.add_to_cart(product)
 
@@ -40,14 +40,14 @@ class TestCart:
 
     @pytest.mark.parametrize("product", ["Sauce Labs Backpack"])
     def test_remove_product_from_inventory(self, logged_in_user, product):
-        """Usuwam produkt z inventory i sprawdzam stan w koszyku."""
+        """Removes product from inventory and checks the status in the cart."""
         inventory_page = InventoryPage(logged_in_user)
         inventory_page.add_to_cart(product)
 
-        # Usunięcie bezpośrednio w Inventory
+        # Deleting directly in Inventory
         inventory_page.remove_from_inventory(product)
 
-        # Sprawdzenie w CartPage, że produkt faktycznie zniknął
+        # Checking in CartPage that the product is actually gone
         cart_page = inventory_page.go_to_cart_page()
         cart_page.check_product_removed(product)
 

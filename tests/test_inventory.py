@@ -13,7 +13,7 @@ class TestInventory:
         ]
     )
     def test_sort_by_name(self, logged_in_user, sort_method, reverse):
-        """Testuje sortowanie produktów po nazwie"""
+        """Tests sorting products by name"""
         inventory_page = InventoryPage(logged_in_user)
         getattr(inventory_page, sort_method)()
         inventory_page.check_sorting_by_name(reverse)
@@ -26,7 +26,7 @@ class TestInventory:
         ]
     )
     def test_sort_by_price(self, logged_in_user, sort_method, reverse):
-        """Testuje sortowanie produktów po cenie"""
+        """Tests sorting products by price"""
         inventory_page = InventoryPage(logged_in_user)
         getattr(inventory_page, sort_method)()
         inventory_page.check_sorting_by_price(reverse)

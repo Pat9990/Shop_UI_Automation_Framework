@@ -5,7 +5,7 @@ from pages.base_page import BasePage
 
 
 class CheckoutPage(BasePage):
-    """Strona Checkout – wprowadzanie danych, podsumowanie zamówienia, finalizacja."""
+    """Checkout page – data entry, order summary, finalization."""
 
     __first_name_input = (By.ID, "first-name")
     __last_name_input = (By.ID, "last-name")
@@ -18,34 +18,34 @@ class CheckoutPage(BasePage):
     def __init__(self, driver:WebDriver):
         super().__init__(driver)
 
-    # ---------------------- Dane użytkownika ----------------------
+    # ---------------------- User data ----------------------
     def input_delivery_data(self, first_name:str = "Anna", last_name:str = "Nowak", postal_code:int = 2365):
-        """Wypełnia dane dostawy i klika Continue."""
+        """Fills out the delivery details and clicks Continue."""
         self._type(self.__first_name_input,first_name)
         self._type(self.__last_name_input,last_name)
         self._type(self.__postal_code_input,postal_code)
         self._click(self.__continue_btn)
 
-    # ---------------------- Produkty i ceny ----------------------
+    # ---------------------- Products and prices ----------------------
     def get_products_from_overview(self) -> dict[str,str]:
-         """Zwraca słownik produktów dodanych do koszyka: {nazwa_produktu: cena}"""
+         """Returns a dictionary of products added to the cart: {product_name: price}."""
          return self._get_products()
 
     def get_total_price_displayed(self) -> float:
-        """Pobiera wartość za produkty ze strony Checkout. Następnie zwraca wartość sumy."""
+        """Gets the value for products from the Checkout page. Then returns the total."""
         price = self._get_text(self.__item_total_field)
         price_number = float(price.lstrip("Item total: $"))
         return price_number
 
     def check_items_price(self, prices:list):
-        """Sprawdza, czy suma obliczona jest taka sama jak wyświetlana na Checkout stronie"""
+        """Checks if the calculated total is the same as the one displayed on the Checkout page."""
         total_price_calculated = sum(self._get_number_of_prices(prices))
         total_price_displayed = self.get_total_price_displayed()
         assert total_price_calculated == total_price_displayed, "Total items price is incorrect"
 
     # ---------------------- Checkout ----------------------
     def checkout_overview(self, products_cart_dict: dict[str,str]):
-        """Weryfikuje produkty w overview i ich sumę cen.Nie kończy checkoutu – osobna metoda finish_order() do finalizacji."""
+        """Verifies the products in the overview and their price sum. Does not complete checkout – separate finish_order() method for finalization."""
         products_overview_dict = self.get_products_from_overview()
         assert products_overview_dict == products_cart_dict, "Incorrect products in overview"
         prices_list = list(products_cart_dict.values())
@@ -53,7 +53,7 @@ class CheckoutPage(BasePage):
         self._click(self.__finish_btn)
 
     def checkout_complete(self) -> bool:
-        """Sprawdza, czy checkout został zakończony.Zwraca True, jeśli widoczny jest tekst potwierdzający zamówienie."""
+        """Checks whether checkout has been completed. Returns True if the order confirmation text is visible."""
         try:
             self.wait_until_text_is_visible(self.__complete_header, "Thank you for your order!")
             return True

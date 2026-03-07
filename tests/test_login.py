@@ -8,7 +8,7 @@ from core.config import INVENTORY_URL, ERR_INCORRECT, ERR_EMPTY_USERNAME, ERR_EM
 class TestLoginPage:
 
     def test_positive_login(self, driver):
-        """Testuje logowanie poprawnymi danymi"""
+        """Tests login with correct data."""
         login_page = LoginPage(driver)
         login_page.open_login_page()
         login_page.login(STANDARD_USER,STANDARD_PASSWORD)
@@ -23,7 +23,7 @@ class TestLoginPage:
         ]
     )
     def test_negative_incorrect_data(self, driver, username, password):
-        """Testuje logowanie niepoprawnymi danymi"""
+        """Tests login with incorrect data."""
         login_page = LoginPage(driver)
         login_page.open_login_page()
         login_page.login(username, password)
@@ -38,7 +38,7 @@ class TestLoginPage:
         ]
     )
     def test_negative_empty_data(self, driver, username, password, expected_error):
-        """Testuje logowanie niekompletnymi danymi"""
+        """Tests login with incomplete data."""
         login_page = LoginPage(driver)
         login_page.open_login_page()
         login_page.login(username, password)
